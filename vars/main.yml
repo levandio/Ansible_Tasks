@@ -1,0 +1,18 @@
+# vars/main.yml
+timezone: "Europe/Madrid"
+new_hostname: "new-hostname"
+tools:
+  - vim
+  - telnet
+  - htop
+  - iotop
+  - atop
+  - mc
+  - traceroute
+  - unip
+motd_template: /etc/update-motd.d/00-header
+directory: /opt/academy
+files:
+  - foo
+  - bar
+  - baz

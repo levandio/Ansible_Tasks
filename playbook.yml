@@ -1,0 +1,42 @@
+---
+- name: Configure the target machine #name of the play
+  hosts: myservers  #target servers listed in inevntory
+  become: yes #enables to become root
+  vars_files:  #enables to use external variables
+    - vars/main.yml
+
+  tasks:
+    - name: Change the timezone #name of the task
+      timezone:  #ansible module to manipulate time
+        name: "{{ timezone }}"  #this value is stored in variable yml
+    
+    - name: Change the hostname
+      hostname:
+        name: "{{ new_hostname }}"
+    
+    - name: Install tools
+      apt:
+        name: "{{ tools }}"
+        state: present
+        update_cache: yes
+    
+    - name: Create MOTD template
+      copy:
+        content: |
+          IP Address: {{ ansible_default_ipv4.address }}
+          Hostname: {{ inventory_hostname }}
+          OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
+        dest: "{{ motd_template }}"
+        mode: '0755'
+
+    - name: Create directory
+      file:
+        path: "{{ directory }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy files to directory
+      copy:
+        dest: "{{ directory }}/{{ item }}"
+        content: "{{ item }} content"
+      loop: "{{ files }}"
