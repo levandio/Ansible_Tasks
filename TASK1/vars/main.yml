@@ -9,7 +9,7 @@ tools:
   - atop
   - mc
   - traceroute
-  - unip
+  - unzip
 motd_template: /etc/update-motd.d/00-header
 directory: /opt/academy
 files:
